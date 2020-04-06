@@ -1,0 +1,41 @@
+
+.card-img-top{
+	width: auto;
+	height: 100px;
+}
+
+.card-title{
+	height: 30px;
+}
+.text-title{
+	font-size: 15px;
+	font-weight: bold;
+	color:rgb(35, 127, 212)!important;
+}
+.text-caption{
+	font-size: 12px;
+	color: rgb(151, 151, 151);
+}
+.harga{
+	font-size: 15px;
+	font-weight: bold;
+	color: rgb(196, 74, 44);
+}
+.table-text{
+	font-size: 12px;
+}
+.button-mp input
+{
+	background-color: chartreuse;
+	width: min-content;
+	height: 20px;
+}
+
+.my-custom-scrollbar {
+	position: relative;
+	height: 300px;
+	overflow: auto;
+	}
+	.table-wrapper-scroll-y {
+	display: block;
+	}

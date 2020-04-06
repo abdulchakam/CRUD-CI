@@ -99,4 +99,11 @@
 			return array_map('unlink', glob(FCPATH."upload/produk/$filename.*"));
 			}
 	}
+
+
+	function get_all_produk(){
+		$hasil = $this->db->get('produk');
+		return $hasil->result();
+	}
+		
 }

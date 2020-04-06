@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Mar 2020 pada 06.41
+-- Waktu pembuatan: 06 Apr 2020 pada 07.39
 -- Versi server: 10.4.10-MariaDB-log
 -- Versi PHP: 7.3.12
 
@@ -44,19 +44,12 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`kd_brg`, `nm_brg`, `satuan`, `harga`, `harga_beli`, `stok`, `stok_min`, `gambar`) VALUES
-('', '', '', 0, 0, 0, 0, ''),
-('B-0001', 'buku tulis putih item', 'Buah', 1000, 900, 193, 5, ''),
-('B-0002', 'Gethuk magelang enak tenan', 'Box', 1500, 2000, 211, 10, ''),
-('B-0003', 'Pensil Lancip tenan', 'Buah', 3000, 2500, 93, 5, ''),
-('B-0004', 'Gethuk Lindri', 'Buah', 5000, 4000, 100, 5, ''),
-('B-0005', 'Mangga', 'Buah', 10000, 9000, 0, 10, ''),
-('B-0006', 'Wingko', 'Buah', 10000, 9000, 100, 10, ''),
-('B-0007', 'Mangga', 'Buah', 10000, 9000, 100, 10, ''),
-('B-0008', 'HP', 'Buah', 2000000, 1800000, 10, 2, ''),
-('B-0009', 'Jam Tangan', 'Buah', 250000, 230000, 10, 2, ''),
-('B-9999', 'Bumbu', 'Box', 11, 11, 11, 11, ''),
-('FD0001', 'Flash Disk', 'Buah', 100000, 900000, 1, 1, ''),
-('w', 'Adminhi', 'sa', 29, 2, 12, 2, '');
+('B-0001', 'buku tulis putih item', 'Buah', 1000, 900, 193, 5, '1.jpg'),
+('B-0002', 'Gethuk magelang enak tenan', 'Box', 1500, 2000, 211, 10, '2.jpg'),
+('B-0003', 'Pensil Lancip tenan', 'Buah', 3000, 2500, 93, 5, '3.jpg'),
+('B-0004', 'Gethuk Lindri', 'Buah', 5000, 4000, 100, 5, '4.jpg'),
+('B-0005', 'Mangga', 'Buah', 10000, 9000, 0, 10, '5.jpg'),
+('B-0006', 'Wingko', 'Buah', 10000, 9000, 100, 10, '6.jpg');
 
 -- --------------------------------------------------------
 
@@ -110,6 +103,28 @@ INSERT INTO `bukutamu` (`id`, `nama`, `situs`, `email`, `pesan`, `waktu`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `due_date` datetime NOT NULL,
+  `status` varchar(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `date`, `due_date`, `status`) VALUES
+(1, '2020-04-06 05:46:58', '2020-04-07 05:46:58', 'unpaid'),
+(2, '2020-04-06 05:49:22', '2020-04-07 05:49:22', 'unpaid'),
+(3, '2020-04-06 06:20:29', '2020-04-07 06:20:29', 'unpaid');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `kategori`
 --
 
@@ -127,6 +142,14 @@ INSERT INTO `kategori` (`id_kategori`, `nm_kategori`, `deskripsi`) VALUES
 (1, 'Olah Raga', 'Olah Raga'),
 (2, 'Politik', 'Politik'),
 (3, 'IT', 'IT');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `konsumen`
+--
+-- Kesalahan membaca struktur untuk tabel penjualan.konsumen: #1932 - Table 'penjualan.konsumen' doesn't exist in engine
+-- Kesalahan membaca data untuk tabel penjualan.konsumen: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `penjualan`.`konsumen`' at line 1
 
 -- --------------------------------------------------------
 
@@ -150,6 +173,32 @@ INSERT INTO `kota` (`IdKota`, `NamaKota`) VALUES
 ('KDL', 'Kendal'),
 ('BTG', 'Batang'),
 ('PKL', 'Pekalongan');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `orders`
+--
+
+CREATE TABLE `orders` (
+  `invoice_id` varchar(10) NOT NULL,
+  `produk_id` varchar(10) NOT NULL,
+  `produk_nama` varchar(30) NOT NULL,
+  `produk_harga` double NOT NULL,
+  `quantity` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `orders`
+--
+
+INSERT INTO `orders` (`invoice_id`, `produk_id`, `produk_nama`, `produk_harga`, `quantity`) VALUES
+('1', '2', 'Hp Samsung Galaxy A51', 4399000, 2),
+('1', '1', 'Hp Oppo R17', 8999000, 1),
+('2', '6', 'Hp Oppo A9', 3430000, 1),
+('2', '5', 'Hp Realme XT', 4399000, 1),
+('3', '4', 'Hp Samsung Galaxy A20S', 2399000, 1),
+('3', '6', 'Hp Oppo A9', 3430000, 2);
 
 -- --------------------------------------------------------
 
@@ -180,32 +229,24 @@ INSERT INTO `produk` (`produk_id`, `produk_nama`, `produk_harga`, `produk_image`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Struktur dari tabel `users`
 --
 
-CREATE TABLE `user` (
-  `id` int(4) NOT NULL,
-  `user_id` varchar(10) NOT NULL,
-  `name` varchar(30) DEFAULT NULL,
-  `password` varchar(32) DEFAULT NULL,
-  `hak_akses` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `hak_akses` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `user` (`id`, `user_id`, `name`, `password`, `hak_akses`) VALUES
-(1, 'admin', 'a71b', '827ccb0eea8a706c4c34a16891f84e7b', 0),
-(2, 'ghiyatsi', 'ghiyatsi', '827ccb0eea8a706c4c34a16891f84e7b', 1),
-(6, 'me', 'me', 'ab86a1e1ef70dff97959067b723c5c24', 2),
-(7, 'admin1', 'Me', '827ccb0eea8a706c4c34a16891f84e7b', 0),
-(8, 'paijo', 'paijo', '44529fdc8afb86d58c6c02cd00c02e43', 0),
-(9, 'panjul', 'panjul', '827ccb0eea8a706c4c34a16891f84e7b', 2),
-(10, 'najwa', 'najwa', '827ccb0eea8a706c4c34a16891f84e7b', 0),
-(11, 'aulia', 'aulia', '827ccb0eea8a706c4c34a16891f84e7b', 2),
-(12, 'anis', 'anis', '827ccb0eea8a706c4c34a16891f84e7b', 0),
-(13, 'punjul', 'punjul', '2f029d48f3ed3f0d5f3c9a4853c192cf', 1);
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `hak_akses`) VALUES
+(1, 'admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 1),
+(2147483647, 'abdulchakam', 'abdulchakam@gmail.co', '0cc175b9c0f1b6a831c399e269772661', 2);
 
 --
 -- Indexes for dumped tables
@@ -232,6 +273,12 @@ ALTER TABLE `bukutamu`
   ADD KEY `id_2` (`id`);
 
 --
+-- Indeks untuk tabel `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
@@ -244,11 +291,10 @@ ALTER TABLE `produk`
   ADD PRIMARY KEY (`produk_id`);
 
 --
--- Indeks untuk tabel `user`
+-- Indeks untuk tabel `users`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id_idx` (`user_id`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -267,6 +313,12 @@ ALTER TABLE `bukutamu`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
@@ -279,10 +331,10 @@ ALTER TABLE `produk`
   MODIFY `produk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50000002;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT untuk tabel `users`
 --
-ALTER TABLE `user`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
